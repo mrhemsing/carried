@@ -23,9 +23,22 @@ npm run build
 Copy `.env.example` to `.env.local`, set `DATABASE_URL`, then run:
 
 ```bash
+npm run db:generate
 npm run db:migrate
 npm run db:seed
 ```
+
+For local development with Docker:
+
+```bash
+docker compose up -d
+$env:DATABASE_URL="postgres://postgres:postgres@localhost:5432/carried"
+npm run db:migrate
+npm run db:seed
+npm run ingest:escribe:persist
+```
+
+The eScribe persist script currently targets Burnaby February 2026 sample data and writes normalized jurisdictions, governing bodies, meetings, documents, and agenda items.
 
 ## Docs
 
@@ -33,3 +46,4 @@ npm run db:seed
 - Build strategy: `docs/BUILD_STRATEGY.md`
 - Product brief: `docs/PRODUCT_BRIEF.md`
 - Architecture decisions: `docs/ARCHITECTURE_DECISIONS.md`
+- Platform verification: `docs/PLATFORM_VERIFICATION.md`
