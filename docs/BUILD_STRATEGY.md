@@ -20,9 +20,10 @@ Source planning: `docs/CARRIED_BUSINESS_PLAN.md`.
 
 Start with the highest-leverage Metro Vancouver coverage:
 
-1. eScribe connector for Burnaby, Delta, New Westminster, Port Coquitlam, Port Moody, Langley City, White Rock, Pitt Meadows, and likely Langley Township / Maple Ridge after verification.
+1. eScribe connector for Burnaby, Delta, Maple Ridge, New Westminster, Port Coquitlam, Port Moody, Langley City, White Rock, and Pitt Meadows.
 2. Vancouver custom connector for `council.vancouver.ca`, Vancouver Open Data voting records, and related development datasets.
 3. Surrey custom connector for agendas, minutes, and video archive.
+4. Township of Langley as deferred custom calendar + YouTube work, not part of the initial eScribe batch.
 
 This targets the plan's revised v1: eScribe + Vancouver + Surrey, aiming at broad population coverage without needing every custom municipal site on day one.
 

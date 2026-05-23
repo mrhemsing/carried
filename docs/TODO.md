@@ -40,8 +40,8 @@ Status key: `[todo]`, `[doing]`, `[done]`, `[blocked]`.
 
 ## Data And Ingestion
 
-- [todo] Verify exact platform URLs for v1 municipalities.
-- [todo] Implement eScribe connector spike.
+- [done] Verify exact platform URLs for v1 municipalities.
+- [doing] Implement eScribe connector spike.
 - [todo] Implement Vancouver connector:
   - council meetings
   - agenda/minutes documents
