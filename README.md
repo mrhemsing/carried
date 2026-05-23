@@ -18,6 +18,15 @@ npm run lint
 npm run build
 ```
 
+## Database
+
+Copy `.env.example` to `.env.local`, set `DATABASE_URL`, then run:
+
+```bash
+npm run db:migrate
+npm run db:seed
+```
+
 ## Docs
 
 - Business plan: `docs/CARRIED_BUSINESS_PLAN.md`

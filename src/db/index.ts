@@ -9,6 +9,6 @@ if (!connectionString) {
   throw new Error("DATABASE_URL is required to initialize the database client.");
 }
 
-const client = postgres(connectionString);
+export const sqlClient = postgres(connectionString);
 
-export const db = drizzle(client, { schema });
+export const db = drizzle(sqlClient, { schema });

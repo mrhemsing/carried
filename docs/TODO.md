@@ -70,7 +70,7 @@ Status key: `[todo]`, `[doing]`, `[done]`, `[blocked]`.
   - saved searches
   - alerts
   - summaries
-- [doing] Add seed data for Vancouver, Surrey, Burnaby, and Richmond.
+- [done] Add seed data for Vancouver, Surrey, Burnaby, and Richmond.
 - [todo] Add search UI connected to seed data.
 - [todo] Add saved alert creation flow.
 - [todo] Add project tracking flow.
@@ -82,7 +82,7 @@ Status key: `[todo]`, `[doing]`, `[done]`, `[blocked]`.
 - [todo] Pick auth provider: Clerk, Auth.js, or Supabase Auth.
 - [todo] Pick object storage: likely Cloudflare R2.
 - [todo] Pick job runner/queue for ingestion and alert delivery.
-- [todo] Add environment variable documentation.
+- [done] Add environment variable documentation.
 - [todo] Add deployment plan.
 
 ## Brand And Legal
