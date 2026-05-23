@@ -32,6 +32,10 @@ export async function getProjects() {
   return projects;
 }
 
+export async function getProject(slug: string) {
+  return projects.find((project) => project.slug === slug);
+}
+
 export async function getMunicipalities() {
   return municipalities;
 }

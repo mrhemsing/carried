@@ -134,25 +134,52 @@ export const alerts = [
 
 export const projects = [
   {
+    slug: "broadway-mixed-use-rezoning",
     name: "Broadway mixed-use rezoning",
     jurisdiction: "Vancouver",
     stage: "Agenda monitoring",
     nextAction: "Watch next council package",
     signal: "High",
+    address: "Broadway corridor",
+    summary:
+      "Monitoring CD-1 and rental replacement language as Broadway Plan implementation moves through council packages.",
+    timeline: [
+      "Agenda item detected for Broadway Plan implementation update.",
+      "Rental replacement requirements mentioned in staff report.",
+      "Next council package should be checked for vote language.",
+    ],
   },
   {
+    slug: "king-george-transit-village",
     name: "King George transit village",
     jurisdiction: "Surrey",
     stage: "Public hearing",
     nextAction: "Summarize council debate",
     signal: "High",
+    address: "King George corridor",
+    summary:
+      "Tracking mixed-use residential rezoning near rapid transit through public hearing and council readings.",
+    timeline: [
+      "Public hearing agenda detected.",
+      "Staff recommendation includes first and second reading.",
+      "Council debate summary pending transcript capture.",
+    ],
   },
   {
+    slug: "metrotown-rental-replacement",
     name: "Metrotown rental replacement",
     jurisdiction: "Burnaby",
     stage: "Committee review",
     nextAction: "Track vote and conditions",
     signal: "Medium",
+    address: "Metrotown",
+    summary:
+      "Watching committee conditions around tower separation, daycare contribution, and transportation demand measures.",
+    timeline: [
+      "Committee minutes mention daycare contribution.",
+      "Transportation demand measures flagged.",
+      "Vote and final conditions not yet captured.",
+    ],
   },
 ];
 

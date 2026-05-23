@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { getProjects } from "@/lib/data";
 
 export default async function ProjectsPage() {
@@ -27,7 +29,14 @@ export default async function ProjectsPage() {
           <tbody>
             {projects.map((project) => (
               <tr className="border-b last:border-0" key={project.name}>
-                <td className="px-4 py-3 font-medium">{project.name}</td>
+                <td className="px-4 py-3 font-medium">
+                  <Link
+                    className="hover:underline"
+                    href={`/dashboard/projects/${project.slug}`}
+                  >
+                    {project.name}
+                  </Link>
+                </td>
                 <td className="px-4 py-3">{project.jurisdiction}</td>
                 <td className="px-4 py-3">{project.stage}</td>
                 <td className="px-4 py-3 text-muted-foreground">
