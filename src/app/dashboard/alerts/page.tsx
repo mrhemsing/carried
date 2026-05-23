@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { getAlerts } from "@/lib/data";
 
 export default async function AlertsPage() {
@@ -6,11 +8,21 @@ export default async function AlertsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Alerts</h1>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          Saved monitoring rules for topics, projects, addresses, and agenda
-          language. Email delivery comes after persistence is wired.
-        </p>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-semibold tracking-tight">Alerts</h1>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+              Saved monitoring rules for topics, projects, addresses, and agenda
+              language. Email delivery comes after persistence is wired.
+            </p>
+          </div>
+          <Link
+            className="inline-flex h-9 items-center rounded-lg bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            href="/dashboard/alerts/new"
+          >
+            New alert
+          </Link>
+        </div>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
