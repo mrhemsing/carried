@@ -1,6 +1,7 @@
 import {
   Bell,
   Building2,
+  CalendarDays,
   FileSearch,
   Landmark,
   MapPinned,
@@ -108,6 +109,73 @@ export const sampleResults = [
   },
 ];
 
+export const meetings = [
+  {
+    slug: "vancouver-regular-council-2026-05-25",
+    title: "Regular Council Meeting",
+    jurisdiction: "Vancouver",
+    body: "Vancouver Council",
+    date: "May 25, 2026",
+    status: "Scheduled",
+    source: "Custom + Open Data",
+    summary:
+      "Upcoming agenda includes Broadway Plan implementation, CD-1 amendment language, and rental replacement requirements.",
+    agendaItems: [
+      "Broadway Plan implementation update",
+      "Rental replacement policy language",
+      "CD-1 amendment package",
+    ],
+  },
+  {
+    slug: "surrey-public-hearing-2026-05-26",
+    title: "Public Hearing",
+    jurisdiction: "Surrey",
+    body: "Surrey Council",
+    date: "May 26, 2026",
+    status: "Scheduled",
+    source: "Custom archive",
+    summary:
+      "Public hearing package includes a mixed-use King George corridor rezoning near rapid transit.",
+    agendaItems: [
+      "King George corridor rezoning package",
+      "Mixed-use residential proposal",
+      "Rapid transit adjacency considerations",
+    ],
+  },
+  {
+    slug: "burnaby-planning-committee-2026-05-18",
+    title: "Planning and Development Committee",
+    jurisdiction: "Burnaby",
+    body: "Burnaby Council",
+    date: "May 18, 2026",
+    status: "Held",
+    source: "eScribe",
+    summary:
+      "Committee minutes cover Metrotown development permit delegation, daycare contribution, and transportation demand measures.",
+    agendaItems: [
+      "Metrotown development permit delegation",
+      "Daycare contribution",
+      "Transportation demand measures",
+    ],
+  },
+  {
+    slug: "richmond-general-purposes-2026-05-20",
+    title: "General Purposes Committee",
+    jurisdiction: "Richmond",
+    body: "Richmond Council",
+    date: "May 20, 2026",
+    status: "Held",
+    source: "Granicus + YouTube",
+    summary:
+      "Committee reviewed City Centre OCP amendments and active transportation connections.",
+    agendaItems: [
+      "City Centre OCP amendment review",
+      "Active transportation connections",
+      "Development application status report",
+    ],
+  },
+];
+
 export const alerts = [
   {
     name: "Broadway Plan + CD-1",
@@ -208,6 +276,12 @@ export const dashboardCards = [
     icon: MapPinned,
     href: "/dashboard/jurisdictions",
   },
+  {
+    title: "Open meetings",
+    description: "Inspect agenda items, summaries, and source evidence.",
+    icon: CalendarDays,
+    href: "/dashboard/meetings",
+  },
 ];
 
 export const navItems = [
@@ -215,5 +289,6 @@ export const navItems = [
   { label: "Search", href: "/dashboard/search", icon: Search },
   { label: "Alerts", href: "/dashboard/alerts", icon: Bell },
   { label: "Projects", href: "/dashboard/projects", icon: FileSearch },
+  { label: "Meetings", href: "/dashboard/meetings", icon: CalendarDays },
   { label: "Jurisdictions", href: "/dashboard/jurisdictions", icon: MapPinned },
 ];

@@ -74,7 +74,7 @@ Status key: `[todo]`, `[doing]`, `[done]`, `[blocked]`.
 - [done] Add search UI connected to seed-style data access layer.
 - [done] Add saved alert creation flow.
 - [done] Add project tracking flow.
-- [todo] Add meeting summary/detail view.
+- [done] Add meeting summary/detail view.
 
 ## Infrastructure
 

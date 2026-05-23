@@ -2,6 +2,7 @@ import {
   alerts,
   coverageStats,
   dashboardCards,
+  meetings,
   municipalities,
   personas,
   projects,
@@ -34,6 +35,14 @@ export async function getProjects() {
 
 export async function getProject(slug: string) {
   return projects.find((project) => project.slug === slug);
+}
+
+export async function getMeetings() {
+  return meetings;
+}
+
+export async function getMeeting(slug: string) {
+  return meetings.find((meeting) => meeting.slug === slug);
 }
 
 export async function getMunicipalities() {
