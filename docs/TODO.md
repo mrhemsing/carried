@@ -46,7 +46,7 @@ Status key: `[todo]`, `[doing]`, `[done]`, `[blocked]`.
 - [todo] Implement Vancouver connector:
   - council meetings
   - agenda/minutes documents
-  - voting records API
+  - [done] voting records API sample
   - development-related open data
 - [todo] Implement Surrey connector:
   - agendas

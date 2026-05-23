@@ -40,6 +40,13 @@ npm run ingest:escribe:persist
 
 The eScribe persist script currently targets Burnaby February 2026 sample data and writes normalized jurisdictions, governing bodies, meetings, documents, and agenda items.
 
+Connector samples:
+
+```bash
+npm run ingest:escribe:sample
+npm run ingest:vancouver:votes
+```
+
 ## Docs
 
 - Business plan: `docs/CARRIED_BUSINESS_PLAN.md`
