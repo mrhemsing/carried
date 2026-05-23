@@ -1,0 +1,192 @@
+import {
+  Bell,
+  Building2,
+  FileSearch,
+  Landmark,
+  MapPinned,
+  Newspaper,
+  Search,
+} from "lucide-react";
+
+export const coverageStats = [
+  { label: "V1 municipalities", value: "17" },
+  { label: "Priority bodies", value: "35+" },
+  { label: "Population coverage", value: "93%" },
+  { label: "Target launch", value: "6-8w" },
+];
+
+export const personas = [
+  {
+    title: "Developers",
+    description:
+      "Track rezonings, agenda movement, votes, and public mentions across Metro Vancouver.",
+    icon: Building2,
+  },
+  {
+    title: "Advocates",
+    description:
+      "Follow topics like housing, transit, climate, SROs, bike lanes, or neighbourhood plans.",
+    icon: Bell,
+  },
+  {
+    title: "Journalists",
+    description:
+      "Search meetings quickly and get concise source-linked summaries after long sessions.",
+    icon: Newspaper,
+  },
+];
+
+export const municipalities = [
+  {
+    name: "Vancouver",
+    platform: "Custom + Open Data",
+    status: "Connector planned",
+    population: "662K",
+    priority: "P0",
+  },
+  {
+    name: "Surrey",
+    platform: "Custom archive",
+    status: "Connector planned",
+    population: "568K",
+    priority: "P0",
+  },
+  {
+    name: "Burnaby",
+    platform: "eScribe",
+    status: "eScribe target",
+    population: "249K",
+    priority: "P0",
+  },
+  {
+    name: "Richmond",
+    platform: "Granicus + YouTube",
+    status: "Phase 2 connector",
+    population: "209K",
+    priority: "P1",
+  },
+  {
+    name: "New Westminster",
+    platform: "eScribe",
+    status: "eScribe target",
+    population: "89K",
+    priority: "P1",
+  },
+  {
+    name: "Port Moody",
+    platform: "eScribe",
+    status: "eScribe target",
+    population: "35K",
+    priority: "P1",
+  },
+];
+
+export const sampleResults = [
+  {
+    title: "Broadway Plan implementation update",
+    body: "Council reviewed rental replacement requirements and public realm delivery timelines.",
+    city: "Vancouver",
+    date: "May 21, 2026",
+    type: "Council agenda",
+    matches: ["Broadway Plan", "rental replacement", "CD-1"],
+  },
+  {
+    title: "King George corridor rezoning package",
+    body: "Staff recommended first and second reading for a mixed-use residential proposal near rapid transit.",
+    city: "Surrey",
+    date: "May 20, 2026",
+    type: "Public hearing",
+    matches: ["rezoning", "mixed-use", "rapid transit"],
+  },
+  {
+    title: "Metrotown development permit delegation",
+    body: "Committee discussion covered tower separation, daycare contribution, and transportation demand measures.",
+    city: "Burnaby",
+    date: "May 18, 2026",
+    type: "Committee minutes",
+    matches: ["Metrotown", "daycare", "transportation"],
+  },
+];
+
+export const alerts = [
+  {
+    name: "Broadway Plan + CD-1",
+    audience: "Planning consultant",
+    cadence: "Agenda + post-meeting",
+    lastMatch: "Vancouver council agenda",
+    status: "Ready for preview",
+  },
+  {
+    name: "SRO policy / DTES",
+    audience: "Journalist",
+    cadence: "Daily digest",
+    lastMatch: "Standing committee minutes",
+    status: "Ready for preview",
+  },
+  {
+    name: "King George rezoning",
+    audience: "Developer",
+    cadence: "Immediate",
+    lastMatch: "Surrey public hearing notice",
+    status: "Needs source link",
+  },
+];
+
+export const projects = [
+  {
+    name: "Broadway mixed-use rezoning",
+    jurisdiction: "Vancouver",
+    stage: "Agenda monitoring",
+    nextAction: "Watch next council package",
+    signal: "High",
+  },
+  {
+    name: "King George transit village",
+    jurisdiction: "Surrey",
+    stage: "Public hearing",
+    nextAction: "Summarize council debate",
+    signal: "High",
+  },
+  {
+    name: "Metrotown rental replacement",
+    jurisdiction: "Burnaby",
+    stage: "Committee review",
+    nextAction: "Track vote and conditions",
+    signal: "Medium",
+  },
+];
+
+export const dashboardCards = [
+  {
+    title: "Search civic records",
+    description: "Find agenda items, minutes, transcript moments, and votes.",
+    icon: Search,
+    href: "/dashboard/search",
+  },
+  {
+    title: "Watch alerts",
+    description: "Preview saved searches before email delivery is wired.",
+    icon: Bell,
+    href: "/dashboard/alerts",
+  },
+  {
+    title: "Track projects",
+    description: "Follow rezonings and named initiatives across meetings.",
+    icon: FileSearch,
+    href: "/dashboard/projects",
+  },
+  {
+    title: "Review coverage",
+    description: "See v1 municipality priorities and connector status.",
+    icon: MapPinned,
+    href: "/dashboard/jurisdictions",
+  },
+];
+
+export const navItems = [
+  { label: "Dashboard", href: "/dashboard", icon: Landmark },
+  { label: "Search", href: "/dashboard/search", icon: Search },
+  { label: "Alerts", href: "/dashboard/alerts", icon: Bell },
+  { label: "Projects", href: "/dashboard/projects", icon: FileSearch },
+  { label: "Jurisdictions", href: "/dashboard/jurisdictions", icon: MapPinned },
+];

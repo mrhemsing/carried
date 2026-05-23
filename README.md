@@ -1,0 +1,26 @@
+# Carried
+
+Carried is a local government meeting monitor for Greater Vancouver. It tracks agendas, minutes, transcripts, votes, and development-related civic activity so users can search across municipalities and receive alerts when their topics, projects, or addresses come up.
+
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+## Checks
+
+```bash
+npm run lint
+npm run build
+```
+
+## Docs
+
+- Business plan: `docs/CARRIED_BUSINESS_PLAN.md`
+- Build strategy: `docs/BUILD_STRATEGY.md`
+- Product brief: `docs/PRODUCT_BRIEF.md`
+- Architecture decisions: `docs/ARCHITECTURE_DECISIONS.md`
