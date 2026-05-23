@@ -1,6 +1,12 @@
-import { coverageStats, personas, sampleResults } from "@/lib/mock-data";
+import { getCoverageStats, getPersonas, getSearchResults } from "@/lib/data";
 
-export default function Home() {
+export default async function Home() {
+  const [coverageStats, personas, sampleResults] = await Promise.all([
+    getCoverageStats(),
+    getPersonas(),
+    getSearchResults(),
+  ]);
+
   return (
     <main className="min-h-svh bg-background text-foreground">
       <section className="border-b">

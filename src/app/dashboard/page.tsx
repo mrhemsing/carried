@@ -1,9 +1,21 @@
 import Link from "next/link";
 
 import { MetricCard } from "@/components/metric-card";
-import { alerts, coverageStats, dashboardCards, projects } from "@/lib/mock-data";
+import {
+  getAlerts,
+  getCoverageStats,
+  getDashboardCards,
+  getProjects,
+} from "@/lib/data";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const [alerts, coverageStats, dashboardCards, projects] = await Promise.all([
+    getAlerts(),
+    getCoverageStats(),
+    getDashboardCards(),
+    getProjects(),
+  ]);
+
   return (
     <div className="space-y-6">
       <div>

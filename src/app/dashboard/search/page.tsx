@@ -1,6 +1,8 @@
-import { sampleResults } from "@/lib/mock-data";
+import { getSearchResults } from "@/lib/data";
 
-export default function SearchPage() {
+export default async function SearchPage() {
+  const sampleResults = await getSearchResults();
+
   return (
     <div className="space-y-6">
       <div>

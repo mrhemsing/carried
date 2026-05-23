@@ -71,7 +71,7 @@ Status key: `[todo]`, `[doing]`, `[done]`, `[blocked]`.
   - alerts
   - summaries
 - [done] Add seed data for Vancouver, Surrey, Burnaby, and Richmond.
-- [todo] Add search UI connected to seed data.
+- [done] Add search UI connected to seed-style data access layer.
 - [todo] Add saved alert creation flow.
 - [todo] Add project tracking flow.
 - [todo] Add meeting summary/detail view.

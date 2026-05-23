@@ -1,6 +1,8 @@
-import { municipalities } from "@/lib/mock-data";
+import { getMunicipalities } from "@/lib/data";
 
-export default function JurisdictionsPage() {
+export default async function JurisdictionsPage() {
+  const municipalities = await getMunicipalities();
+
   return (
     <div className="space-y-6">
       <div>

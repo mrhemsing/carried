@@ -1,6 +1,8 @@
-import { projects } from "@/lib/mock-data";
+import { getProjects } from "@/lib/data";
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getProjects();
+
   return (
     <div className="space-y-6">
       <div>

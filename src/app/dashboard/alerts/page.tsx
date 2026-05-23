@@ -1,6 +1,8 @@
-import { alerts } from "@/lib/mock-data";
+import { getAlerts } from "@/lib/data";
 
-export default function AlertsPage() {
+export default async function AlertsPage() {
+  const alerts = await getAlerts();
+
   return (
     <div className="space-y-6">
       <div>
