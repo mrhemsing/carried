@@ -1,0 +1,41 @@
+{
+  "d": [
+    {
+      "ID": "8716a2da-94a0-42ea-9e04-13c4e63af028",
+      "MeetingName": "Transportation Committee",
+      "StartDate": "2026/04/08 17:00:00",
+      "FormattedStart": "Wednesday, April 08, 2026 @ 5:00 PM",
+      "EndDate": "2026/04/08 20:00:00",
+      "Description": "Council Chamber, City Hall<br/>4949 Canada Way, Burnaby, BC",
+      "Location": "Council Chamber, City Hall",
+      "MeetingType": "Transportation Committee",
+      "HasAgenda": true,
+      "HasVideo": true,
+      "HasLiveVideo": false,
+      "MeetingDocumentLink": [
+        {
+          "Format": ".pdf",
+          "Title": "Agenda (PDF)",
+          "Type": "Agenda",
+          "Url": "FileStream.ashx?DocumentId=89028",
+          "AriaLabel": "Agenda (PDF) for Transportation Committee 08 April 2026"
+        },
+        {
+          "Format": "HTML",
+          "Title": "Agenda (HTML)",
+          "Type": "Agenda",
+          "Url": "Meeting.aspx?Id=8716a2da-94a0-42ea-9e04-13c4e63af028&Agenda=Agenda&lang=English",
+          "AriaLabel": "Agenda (HTML) for Transportation Committee 08 April 2026"
+        },
+        {
+          "Format": "Video",
+          "Title": "Video",
+          "Type": "Video",
+          "Url": "./Players/ISIStandAlonePlayer.aspx?Id=8716a2da-94a0-42ea-9e04-13c4e63af028",
+          "HasVideo": true,
+          "HasLiveVideo": false
+        }
+      ]
+    }
+  ]
+}

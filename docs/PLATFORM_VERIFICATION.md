@@ -49,12 +49,17 @@ type EscribeTenant = {
 
 Minimum successful spike:
 
-- Fetch the tenant calendar page.
-- Discover at least one meeting URL from the calendar HTML or the page's backing request.
-- Fetch a meeting page.
-- Extract meeting title, date/time, body/committee label, agenda URL, minutes URL if present, and attachments.
-- Normalize into the existing `jurisdictions`, `governing_bodies`, `meetings`, `documents`, and `agenda_items` model.
-- Save a fixture for the source page so parser changes are testable without hitting the city site every run.
+- [done] Fetch the tenant calendar data through `MeetingsCalendarView.aspx/GetCalendarMeetings`.
+- [done] Discover meeting, agenda, minutes, and video URLs from the backing response.
+- [done] Fetch an HTML agenda page.
+- [done] Extract meeting title, date/time, body/committee label, agenda URL, minutes URL if present, and first agenda items.
+- [done] Normalize into shapes compatible with the existing `jurisdictions`, `governing_bodies`, `meetings`, `documents`, and `agenda_items` model.
+- [done] Save a fixture for the Burnaby source response so parser changes are testable without hitting the city site every run.
+
+Spike scripts:
+
+- `npm run ingest:escribe:fixture`
+- `npm run ingest:escribe:sample`
 
 ## Immediate Decision
 
