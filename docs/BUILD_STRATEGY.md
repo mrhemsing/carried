@@ -37,6 +37,12 @@ This targets the plan's revised v1: eScribe + Vancouver + Surrey, aiming at broa
 - **AI pipeline:** Whisper or equivalent for transcription, embeddings for semantic search, LLM extraction for summaries/entities/topics.
 - **Delivery:** email first, Slack later. Keep alert records auditable so users can see why they were notified.
 
+## Transcription Backfill Strategy
+
+Do not start with a full historical archive. Carried will begin with forward capture for new meetings, then a 12-month high-value backfill for Vancouver, Surrey, Burnaby, and Richmond. A targeted 5-year archive should only include meetings with strong development, housing, transportation, OCP, CD-1, rezoning, public-hearing, or major-infrastructure signals until customer demand proves a full archive is worth the spend.
+
+Detailed plan: `docs/TRANSCRIPTION_BACKFILL_PLAN.md`.
+
 ## Domain Model Draft
 
 - `jurisdictions`: municipalities and regional bodies.
@@ -103,4 +109,3 @@ This gives Matt something demoable while ingestion work proceeds behind it.
 - Confirm deployment target: Vercel + managed Postgres/R2, or Railway/Fly for integrated workers.
 - Confirm auth provider: Clerk, Auth.js, or Supabase Auth.
 - Verify Carried domain/trademark availability.
-- Decide whether to backfill historical meetings immediately or start forward-only to control costs.

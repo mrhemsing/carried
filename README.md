@@ -54,3 +54,4 @@ npm run ingest:vancouver:votes
 - Product brief: `docs/PRODUCT_BRIEF.md`
 - Architecture decisions: `docs/ARCHITECTURE_DECISIONS.md`
 - Platform verification: `docs/PLATFORM_VERIFICATION.md`
+- Transcription/backfill plan: `docs/TRANSCRIPTION_BACKFILL_PLAN.md`

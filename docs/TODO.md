@@ -53,7 +53,12 @@ Status key: `[todo]`, `[doing]`, `[done]`, `[blocked]`.
   - minutes
   - video archive metadata
 - [todo] Add document storage plan for PDFs, extracted text, audio, and video artifacts.
-- [todo] Decide forward-only capture versus historical backfill.
+- [done] Decide forward-only capture versus historical backfill:
+  - forward capture first
+  - 12-month high-value backfill second
+  - targeted 5-year archive only after demand is validated
+- [todo] Implement forward video/audio capture plan.
+- [todo] Implement 12-month high-value transcription backfill.
 
 ## App
 
