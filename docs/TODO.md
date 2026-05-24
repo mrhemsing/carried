@@ -42,7 +42,7 @@ Status key: `[todo]`, `[doing]`, `[done]`, `[blocked]`.
 
 - [done] Verify exact platform URLs for v1 municipalities.
 - [done] Implement eScribe connector spike.
-- [todo] Persist eScribe normalized meetings/documents/items into Postgres.
+- [done] Persist eScribe normalized meetings/documents/items into Postgres.
 - [todo] Implement Vancouver connector:
   - council meetings
   - agenda/minutes documents

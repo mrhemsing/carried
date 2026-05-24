@@ -36,14 +36,16 @@ $env:DATABASE_URL="postgres://postgres:postgres@localhost:5432/carried"
 npm run db:migrate
 npm run db:seed
 npm run ingest:escribe:persist
+npm run ingest:escribe:batch
 ```
 
-The eScribe persist script currently targets Burnaby February 2026 sample data and writes normalized jurisdictions, governing bodies, meetings, documents, and agenda items.
+The single-tenant eScribe persist script targets Burnaby February 2026 sample data. The batch script runs the same normalized persistence path across the configured eScribe municipalities and writes jurisdictions, governing bodies, meetings, documents, and agenda items.
 
 Connector samples:
 
 ```bash
 npm run ingest:escribe:sample
+npm run ingest:escribe:batch -- --limit 2
 npm run ingest:vancouver:votes
 ```
 

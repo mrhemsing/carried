@@ -157,7 +157,10 @@ async function ensureGoverningBody(
 
 async function ensureMeeting(governingBodyId: string, meeting: NormalizedMeeting) {
   const existing = await db.query.meetings.findFirst({
-    where: eq(meetings.sourceExternalId, meeting.externalId),
+    where: and(
+      eq(meetings.governingBodyId, governingBodyId),
+      eq(meetings.sourceExternalId, meeting.externalId),
+    ),
     columns: { id: true },
   });
 

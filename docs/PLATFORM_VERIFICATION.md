@@ -60,6 +60,10 @@ Spike scripts:
 
 - `npm run ingest:escribe:fixture`
 - `npm run ingest:escribe:sample`
+- `npm run ingest:escribe:persist`
+- `npm run ingest:escribe:batch`
+
+Batch ingestion defaults to every configured eScribe tenant. Use `-- --tenants burnaby,delta --limit 2` for a narrower verification run.
 
 ## Immediate Decision
 
