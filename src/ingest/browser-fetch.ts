@@ -19,6 +19,7 @@ type FetchResult = {
 
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Safari/537.36 Carried civic records research";
+const BROWSER_WAIT_MS = Number(process.env.CARRIED_BROWSER_WAIT_MS ?? 0);
 
 export async function fetchPublicPageHtml(
   url: string,
@@ -86,9 +87,10 @@ async function fetchWithBrowser(
 
   try {
     const headless = process.env.CARRIED_BROWSER_HEADLESS !== "false";
+    const channel = process.env.CARRIED_BROWSER_CHANNEL;
     context = await chromium.launchPersistentContext(userDataDir, {
+      channel,
       headless,
-      userAgent: USER_AGENT,
       viewport: { width: 1280, height: 900 },
     });
     const page = await context.newPage();
@@ -97,7 +99,7 @@ async function fetchWithBrowser(
       timeout: options.timeoutMs ?? 30_000,
     });
 
-    await page.waitForTimeout(headless ? 3_000 : 10_000);
+    await page.waitForTimeout(BROWSER_WAIT_MS || (headless ? 3_000 : 10_000));
 
     const html = await page.content();
     return {
