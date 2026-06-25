@@ -20,6 +20,7 @@
     "ingest:media:extract-audio": "tsx --tsconfig tsconfig.json src/ingest/escribe-media.ts --extract-audio",
     "ingest:transcripts:openai": "tsx --tsconfig tsconfig.json src/ingest/openai-transcribe.ts",
     "ingest:transcripts:coverage": "tsx --tsconfig tsconfig.json src/ingest/transcript-coverage.ts",
+    "ingest:vancouver:council": "tsx --tsconfig tsconfig.json src/ingest/vancouver-council-persist.ts",
     "ingest:vancouver:votes": "tsx --tsconfig tsconfig.json src/ingest/vancouver-open-data.ts --limit 25"
   },
   "dependencies": {
