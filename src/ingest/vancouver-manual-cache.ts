@@ -46,7 +46,7 @@ async function main() {
       continue;
     }
 
-    const inferred = inferAgendaUrl(html);
+    const inferred = inferAgendaUrl(html, file);
 
     if (!inferred) {
       skipped.push({ source, reason: "could-not-infer-agenda-url" });
@@ -69,21 +69,33 @@ async function main() {
   console.log(JSON.stringify({ normalized, skipped }, null, 2));
 }
 
-function inferAgendaUrl(html: string) {
+function inferAgendaUrl(html: string, fileName: string) {
   const match = html.match(
     /https?:\/\/council\.vancouver\.ca\/(\d{8})\/([a-z]+)\1ag\.htm/i,
   );
 
-  if (!match) {
+  if (match) {
+    const [, stamp, rawCode] = match;
+    const code = rawCode.toLowerCase();
+
+    if (!VALID_CODES.has(code)) {
+      return null;
+    }
+
+    return {
+      stamp,
+      code,
+      url: `https://council.vancouver.ca/${stamp}/${code}${stamp}ag.htm`,
+    };
+  }
+
+  const fallback = inferFromSavedPage(html, fileName);
+
+  if (!fallback) {
     return null;
   }
 
-  const [, stamp, rawCode] = match;
-  const code = rawCode.toLowerCase();
-
-  if (!VALID_CODES.has(code)) {
-    return null;
-  }
+  const { stamp, code } = fallback;
 
   return {
     stamp,
@@ -91,6 +103,103 @@ function inferAgendaUrl(html: string) {
     url: `https://council.vancouver.ca/${stamp}/${code}${stamp}ag.htm`,
   };
 }
+
+function inferFromSavedPage(html: string, fileName: string) {
+  const title = stripHtml(
+    firstTextMatch(html, /<title[^>]*>([\s\S]*?)<\/title>/i) ??
+      firstTextMatch(html, /<h1[^>]*>([\s\S]*?)<\/h1>/i) ??
+      "",
+  );
+  const context = normalizeWhitespace(`${fileName} ${title}`).toLowerCase();
+  const stamp = inferDateStamp(context);
+  const code = inferMeetingCode(context);
+
+  if (!stamp || !code) {
+    return null;
+  }
+
+  return { stamp, code };
+}
+
+function inferMeetingCode(context: string) {
+  if (context.includes("public hearing")) {
+    return "phea";
+  }
+
+  if (context.includes("city finance and services")) {
+    return "cfsc";
+  }
+
+  if (context.includes("policy and strategic priorities")) {
+    return "pspc";
+  }
+
+  if (
+    /\bcouncil meeting\b/.test(context) ||
+    context.includes("regular council") ||
+    context.includes("council agenda")
+  ) {
+    return "regu";
+  }
+
+  return null;
+}
+
+function inferDateStamp(context: string) {
+  const match = context.match(
+    /\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2})(?:\s+(?:and|&)\s+\d{1,2})?,?\s+(\d{4})\b/i,
+  );
+
+  if (!match) {
+    return null;
+  }
+
+  const [, monthName, day, year] = match;
+  const month = MONTHS[monthName.toLowerCase()];
+
+  if (!month) {
+    return null;
+  }
+
+  return `${year}${month}${day.padStart(2, "0")}`;
+}
+
+function firstTextMatch(value: string, pattern: RegExp) {
+  const match = value.match(pattern);
+  return match ? match[1] : null;
+}
+
+function stripHtml(value: string) {
+  return decodeHtml(value.replace(/<[^>]*>/g, " "));
+}
+
+function normalizeWhitespace(value: string) {
+  return decodeHtml(value).replace(/\s+/g, " ").trim();
+}
+
+function decodeHtml(value: string) {
+  return value
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/&apos;/gi, "'");
+}
+
+const MONTHS: Record<string, string> = {
+  january: "01",
+  february: "02",
+  march: "03",
+  april: "04",
+  may: "05",
+  june: "06",
+  july: "07",
+  august: "08",
+  september: "09",
+  october: "10",
+  november: "11",
+  december: "12",
+};
 
 function isBlockedOrMissingPage(html: string) {
   const normalized = html.toLowerCase();
