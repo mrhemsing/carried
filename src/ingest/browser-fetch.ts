@@ -28,7 +28,7 @@ export async function fetchPublicPageHtml(
   const cachePath = htmlCachePath(url, options.cacheNamespace);
   const cached = await readCachedHtml(cachePath);
 
-  if (cached) {
+  if (isUsableHtml(cached)) {
     return { html: cached, source: "cache", url };
   }
 
