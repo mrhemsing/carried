@@ -85,8 +85,9 @@ async function fetchWithBrowser(
   let context;
 
   try {
+    const headless = process.env.CARRIED_BROWSER_HEADLESS !== "false";
     context = await chromium.launchPersistentContext(userDataDir, {
-      headless: true,
+      headless,
       userAgent: USER_AGENT,
       viewport: { width: 1280, height: 900 },
     });
@@ -96,7 +97,7 @@ async function fetchWithBrowser(
       timeout: options.timeoutMs ?? 30_000,
     });
 
-    await page.waitForTimeout(3_000);
+    await page.waitForTimeout(headless ? 3_000 : 10_000);
 
     const html = await page.content();
     return {
