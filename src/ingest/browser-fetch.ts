@@ -12,7 +12,7 @@ type FetchOptions = {
 
 type FetchResult = {
   html: string | null;
-  source: "cache" | "http" | "browser" | "miss";
+  source: "cache" | "manual" | "http" | "browser" | "miss";
   status?: number;
   url: string;
 };
@@ -30,6 +30,13 @@ export async function fetchPublicPageHtml(
 
   if (cached) {
     return { html: cached, source: "cache", url };
+  }
+
+  const manual = await readManualHtml(url, options.cacheNamespace);
+
+  if (isUsableHtml(manual)) {
+    await writeCachedHtml(cachePath, manual!);
+    return { html: manual, source: "manual", url };
   }
 
   const httpResult = await fetchWithHttp(url, options.timeoutMs ?? 20_000);
@@ -123,7 +130,8 @@ function isUsableHtml(html: string | null | undefined) {
   return !(
     html.includes("Sorry, you have been blocked") ||
     html.includes("Attention Required! | Cloudflare") ||
-    html.includes("/cdn-cgi/challenge-platform/")
+    html.includes("/cdn-cgi/challenge-platform/") ||
+    html.includes("The document you're looking for can't be found")
   );
 }
 
@@ -133,6 +141,35 @@ async function readCachedHtml(cachePath: string) {
   } catch {
     return null;
   }
+}
+
+async function readManualHtml(url: string, namespace: string) {
+  const urlPath = new URL(url).pathname;
+  const fileName = path.basename(urlPath).toLowerCase();
+  const stamp = urlPath.match(/\/(\d{8})\//)?.[1];
+  const code = fileName.match(/^([a-z]+)\d{8}ag\.html?$/)?.[1];
+  const candidates = [
+    process.env.CARRIED_MANUAL_HTML_PATH
+      ? path.resolve(process.cwd(), process.env.CARRIED_MANUAL_HTML_PATH)
+      : null,
+    stamp && code
+      ? path.resolve(process.cwd(), "data", "manual", "vancouver", `${stamp}-${code}-ag.html`)
+      : null,
+    stamp && code
+      ? path.resolve(process.cwd(), "data", "manual", namespace, `${stamp}-${code}-ag.html`)
+      : null,
+    path.resolve(process.cwd(), "data", "manual", namespace, fileName),
+  ].filter((candidate): candidate is string => Boolean(candidate));
+
+  for (const candidate of candidates) {
+    const html = await readCachedHtml(candidate);
+
+    if (html) {
+      return html;
+    }
+  }
+
+  return null;
 }
 
 async function writeCachedHtml(cachePath: string, html: string) {
