@@ -34,6 +34,8 @@ dev-*.log
 
 # local ingestion artifacts
 /data/media/
+/data/raw/
+/data/browser-state/
 
 # env files (can opt-in for committing if needed)
 .env*

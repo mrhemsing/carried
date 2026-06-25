@@ -1,6 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+import { fetchPublicPageHtml } from "@/ingest/browser-fetch";
+
 export type VancouverMeetingKind = "council" | "public-hearing" | "standing-committee";
 
 export type VancouverCouncilDocument = {
@@ -250,27 +252,13 @@ export function parseVancouverAgendaItems(
 }
 
 async function requestAgendaHtml(url: string) {
-  try {
-    const response = await fetch(url, {
-      headers: {
-        "user-agent": "Carried ingestion/0.1 public civic records research",
-        accept: "text/html,application/xhtml+xml",
-      },
-    });
+  const result = await fetchPublicPageHtml(url, {
+    cacheNamespace: "vancouver-council",
+    delayMs: 1_250,
+    timeoutMs: 30_000,
+  });
 
-    if (response.status === 404) {
-      return null;
-    }
-
-    if (!response.ok) {
-      return null;
-    }
-
-    const html = await response.text();
-    return html.includes("Sorry, you have been blocked") ? null : html;
-  } catch {
-    return null;
-  }
+  return result.html;
 }
 
 function parseStartsAt(html: string, fallbackDate: Date) {

@@ -99,7 +99,8 @@ Status key: `[todo]`, `[doing]`, `[done]`, `[blocked]`.
   - agenda/minutes documents
   - [done] voting records API sample
   - [done] first council/public-hearing/standing-committee URL-pattern connector and persistence path
-  - [blocked] live `council.vancouver.ca` fetch from current runner is Cloudflare-blocked; fixture parser/build pass, but production capture needs a fetch path that the city site accepts
+  - [done] browser-backed public capture path with raw HTML cache for `council.vancouver.ca`
+  - [blocked] current runner/IP still receives Cloudflare 403 in headless Chromium; next clean path is a non-blocked capture node or official allowlist/feed
   - development-related open data
 - [todo] Implement Surrey connector:
   - agendas
