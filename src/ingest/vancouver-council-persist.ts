@@ -1,3 +1,6 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+
 import { and, eq } from "drizzle-orm";
 
 import { db, sqlClient } from "@/db";
@@ -10,6 +13,7 @@ import {
 } from "@/db/schema";
 import {
   fetchVancouverCouncilMeetings,
+  parseVancouverCouncilMeeting,
   type VancouverCouncilAgendaItem,
   type VancouverCouncilDocument,
   type VancouverCouncilMeeting,
@@ -28,8 +32,9 @@ export async function persistVancouverCouncilMeetings(options: {
   to?: Date;
   kinds?: VancouverMeetingKind[];
   limit?: number;
+  meetings?: VancouverCouncilMeeting[];
 } = {}): Promise<PersistResult> {
-  const normalizedMeetings = await fetchVancouverCouncilMeetings(options);
+  const normalizedMeetings = options.meetings ?? (await fetchVancouverCouncilMeetings(options));
   const jurisdictionId = await ensureVancouverJurisdiction();
   const result: PersistResult = {
     meetingsSeen: normalizedMeetings.length,
@@ -268,11 +273,26 @@ function readKinds() {
 }
 
 async function main() {
+  const fixture = readArg("--fixture");
+  const meetings = fixture
+    ? [
+        parseVancouverCouncilMeeting(
+          await fs.readFile(path.resolve(process.cwd(), fixture), "utf8"),
+          readArg("--url") ?? "https://council.vancouver.ca/20260505/phea20260505ag.htm",
+          {
+            code: readArg("--code") ?? "phea",
+            date: new Date(readArg("--date") ?? "2026-05-05T12:00:00Z"),
+            kind: (readArg("--kind") as VancouverMeetingKind | undefined) ?? "public-hearing",
+          },
+        ),
+      ]
+    : undefined;
   const result = await persistVancouverCouncilMeetings({
     from: readArg("--from") ? new Date(readArg("--from")!) : undefined,
     to: readArg("--to") ? new Date(readArg("--to")!) : undefined,
     kinds: readKinds(),
     limit: readArg("--limit") ? Number(readArg("--limit")) : undefined,
+    meetings,
   });
 
   console.log(JSON.stringify(result, null, 2));
