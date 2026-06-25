@@ -39,6 +39,17 @@ export default async function MeetingsPage() {
             <p className="mt-4 text-sm leading-6 text-muted-foreground">
               {meeting.summary}
             </p>
+            <div className="mt-4 flex flex-wrap gap-2 text-xs text-muted-foreground">
+              <span className="rounded-md border px-2 py-1">
+                {meeting.readableItemCount ?? 0} readable items
+              </span>
+              <span className="rounded-md border px-2 py-1">
+                {meeting.sourceDocumentCount ?? 0} source docs
+              </span>
+              <span className="rounded-md border px-2 py-1">
+                Searchable
+              </span>
+            </div>
           </Link>
         ))}
       </div>

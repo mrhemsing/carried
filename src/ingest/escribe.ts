@@ -33,7 +33,7 @@ export type EscribeCalendarMeeting = {
 };
 
 export type NormalizedDocument = {
-  type: "agenda" | "minutes" | "attachment";
+  type: "agenda" | "minutes" | "report" | "attachment";
   title: string;
   sourceUrl: string;
   format: string;
@@ -55,6 +55,7 @@ export type NormalizedMeeting = {
 };
 
 export type NormalizedAgendaItem = {
+  documents: NormalizedDocument[];
   itemNumber: string;
   title: string;
 };
@@ -167,21 +168,60 @@ export function normalizeEscribeMeeting(
   };
 }
 
-export function parseEscribeAgendaItems(html: string): NormalizedAgendaItem[] {
+export function parseEscribeAgendaItems(
+  html: string,
+  tenant?: EscribeTenant,
+): NormalizedAgendaItem[] {
   const items: NormalizedAgendaItem[] = [];
   const pattern =
     /<DIV class='AgendaItemCounter'[^>]*>\s*([^<]+?)\s*<\/DIV>[\s\S]*?<DIV class='AgendaItemTitle'[^>]*>\s*<a[^>]*>\s*([\s\S]*?)\s*<\/a>/gi;
+  const matches = [...html.matchAll(pattern)];
 
-  for (const match of html.matchAll(pattern)) {
+  for (let index = 0; index < matches.length; index += 1) {
+    const match = matches[index];
     const itemNumber = stripHtml(match[1]).trim();
     const title = decodeHtml(stripHtml(match[2])).trim();
 
     if (itemNumber && title) {
-      items.push({ itemNumber, title });
+      const blockStart = match.index ?? 0;
+      const blockEnd = matches[index + 1]?.index ?? html.length;
+      const block = html.slice(blockStart, blockEnd);
+      items.push({
+        documents: tenant ? parseEscribeAgendaDocumentLinks(tenant, block) : [],
+        itemNumber,
+        title,
+      });
     }
   }
 
   return items;
+}
+
+export function parseEscribeAgendaDocumentLinks(
+  tenant: EscribeTenant,
+  html: string,
+): NormalizedDocument[] {
+  const documents = new Map<string, NormalizedDocument>();
+  const pattern = /<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+
+  for (const match of html.matchAll(pattern)) {
+    const href = decodeHtml(match[1]).trim();
+    const title = decodeHtml(stripHtml(match[2])).trim();
+
+    if (!href || !title || !isSourceDocumentLink(href, title)) {
+      continue;
+    }
+
+    const sourceUrl = absoluteUrl(tenant, href);
+    documents.set(sourceUrl, {
+      type: documentTypeFromTitle(title),
+      title,
+      sourceUrl,
+      format: documentFormatFromTitle(title),
+    });
+  }
+
+  return [...documents.values()];
 }
 
 export function normalizeEscribeMeetings(
@@ -221,11 +261,49 @@ function documentTypeFor(document: EscribeDocumentLink) {
     return "minutes";
   }
 
+  if (document.Title?.toLowerCase().includes("report")) {
+    return "report";
+  }
+
   if (document.Type === "AdditionalDocuments") {
     return "attachment";
   }
 
   return null;
+}
+
+function isSourceDocumentLink(href: string, title: string) {
+  const value = `${href} ${title}`.toLowerCase();
+  return (
+    value.includes("filestream") ||
+    value.includes("documentid=") ||
+    value.includes(".pdf") ||
+    value.includes(".doc") ||
+    value.includes(".xls")
+  );
+}
+
+function documentTypeFromTitle(title: string): NormalizedDocument["type"] {
+  const normalized = title.toLowerCase();
+
+  if (normalized.includes("agenda")) {
+    return "agenda";
+  }
+
+  if (normalized.includes("minutes")) {
+    return "minutes";
+  }
+
+  if (normalized.includes("report")) {
+    return "report";
+  }
+
+  return "attachment";
+}
+
+function documentFormatFromTitle(title: string) {
+  const extension = title.match(/\.([a-z0-9]+)$/i)?.[1];
+  return extension ? extension.toLowerCase() : "";
 }
 
 function parseEscribeDate(value: string) {
@@ -248,7 +326,13 @@ function isPastDate(value: string) {
 }
 
 function absoluteUrl(tenant: EscribeTenant, url: string) {
-  return new URL(url.replace(/^\.\//, ""), `${tenant.baseUrl}/`).toString();
+  const normalized = decodeHtml(url).replace(/^\.\//, "").trim();
+
+  if (/^https?:\/\//i.test(normalized)) {
+    return new URL(normalized).toString();
+  }
+
+  return new URL(normalized, `${tenant.baseUrl}/`).toString();
 }
 
 function slugify(value: string) {
@@ -267,6 +351,7 @@ function decodeHtml(value: string) {
   return value
     .replace(/&nbsp;/g, " ")
     .replace(/&#160;/g, " ")
+    .replace(/&#58;/g, ":")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")

@@ -15,6 +15,11 @@
     "ingest:escribe:batch": "tsx --tsconfig tsconfig.json src/ingest/escribe-batch.ts",
     "ingest:escribe:persist": "tsx --tsconfig tsconfig.json src/ingest/escribe-persist.ts --tenant burnaby --from 2026-02-01T00:00:00-08:00 --to 2026-02-28T23:59:59-08:00 --limit 5",
     "ingest:escribe:sample": "tsx --tsconfig tsconfig.json src/ingest/escribe.ts --tenant burnaby --from 2026-02-01T00:00:00-08:00 --to 2026-02-28T23:59:59-08:00",
+    "ingest:documents:extract": "tsx --tsconfig tsconfig.json src/ingest/document-text.ts",
+    "ingest:media:backfill": "tsx --tsconfig tsconfig.json src/ingest/media-assets.ts --backfill-video-links",
+    "ingest:media:extract-audio": "tsx --tsconfig tsconfig.json src/ingest/escribe-media.ts --extract-audio",
+    "ingest:transcripts:openai": "tsx --tsconfig tsconfig.json src/ingest/openai-transcribe.ts",
+    "ingest:transcripts:coverage": "tsx --tsconfig tsconfig.json src/ingest/transcript-coverage.ts",
     "ingest:vancouver:votes": "tsx --tsconfig tsconfig.json src/ingest/vancouver-open-data.ts --limit 25"
   },
   "dependencies": {
@@ -22,8 +27,11 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",
+    "ffmpeg-static": "^5.3.0",
     "lucide-react": "^1.16.0",
     "next": "16.2.6",
+    "openai": "^6.44.0",
+    "pdf-parse": "^2.4.5",
     "postgres": "^3.4.9",
     "react": "19.2.4",
     "react-dom": "19.2.4",

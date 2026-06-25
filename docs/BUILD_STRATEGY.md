@@ -2,7 +2,7 @@
 
 ## Product Thesis
 
-Carried is a Canada-first local government meeting monitor for Greater Vancouver. It ingests agendas, minutes, meeting videos, transcripts, voting records, and development application signals, then turns them into searchable records and alerts for people who need to know when civic decisions touch their projects, neighbourhoods, or issues.
+Carried is a Canada-first local government intelligence product for Greater Vancouver. It ingests agendas, minutes, meeting videos, transcripts, voting records, and development application signals, then turns them into searchable transcript moments, source-backed records, and alerts for people who need to know when civic decisions touch their projects, neighbourhoods, competitors, or issues.
 
 The wedge is narrow and local: Metro Vancouver developers, planners, lobbyists, lawyers, advocacy organizations, journalists, and engaged residents. The broader moat is BC-specific meeting data, local planning vocabulary, historical archive capture, and cross-jurisdiction tracking across municipalities that currently publish information through fragmented systems.
 
@@ -10,10 +10,11 @@ Source planning: `docs/CARRIED_BUSINESS_PLAN.md`.
 
 ## V1 Product Shape
 
-- **Search:** full-text search over meeting agendas, minutes, and transcripts by topic, address, project, person, company, municipality, or governing body.
+- **Search:** full-text search over timestamped meeting transcripts, agendas, minutes, reports, and attachments by topic, address, project, person, company, municipality, or governing body.
 - **Alerts:** saved keyword/topic/project alerts for upcoming agendas and post-meeting outcomes.
 - **Project tracking:** follow a rezoning, development application, address, PID, or named initiative across meetings.
-- **Meeting summaries:** concise post-meeting synthesis with links back to source documents and transcript timestamps where available.
+- **Meeting summaries:** concise post-meeting synthesis with links back to source documents, transcript quotes, and video timestamps.
+- **Video moments:** every transcribed meeting result should expose the matching quote, timestamp, source meeting, jurisdiction, and video link.
 - **Three onboarding paths:** address-first for residents, project-first for developers, topic-first for advocates and journalists.
 
 ## V1 Data Scope
@@ -39,7 +40,7 @@ This targets the plan's revised v1: eScribe + Vancouver + Surrey, aiming at broa
 
 ## Transcription Backfill Strategy
 
-Do not start with a full historical archive. Carried will begin with forward capture for new meetings, then a 12-month high-value backfill for Vancouver, Surrey, Burnaby, and Richmond. A targeted 5-year archive should only include meetings with strong development, housing, transportation, OCP, CD-1, rezoning, public-hearing, or major-infrastructure signals until customer demand proves a full archive is worth the spend.
+Do not start with a full historical archive, but do make transcript search the product center. Carried will begin with forward capture for new meetings, then a 12-month high-value backfill for Vancouver, Surrey, Burnaby, and Richmond. A targeted 5-year archive should only include meetings with strong development, housing, transportation, OCP, CD-1, rezoning, public-hearing, or major-infrastructure signals until customer demand proves a full archive is worth the spend.
 
 Detailed plan: `docs/TRANSCRIPTION_BACKFILL_PLAN.md`.
 

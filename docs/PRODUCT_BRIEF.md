@@ -2,11 +2,22 @@
 
 ## One-Line Pitch
 
-Carried monitors Greater Vancouver civic meetings and alerts users when an address, project, company, topic, or policy they care about appears in agendas, minutes, transcripts, votes, or development records.
+Carried gives Canadian civic operators an unfair advantage in local government: search thousands of meeting transcripts in seconds, track zoning changes and competitors, and get alerted before opportunities or risks are missed.
 
 ## Primary Wedge
 
-Start with Metro Vancouver real estate and civic-affairs users who currently check fragmented municipal websites manually. The first paid value is saving them from missing agenda movement, public hearing activity, staff reports, votes, and cross-jurisdiction signals.
+Start with Metro Vancouver real estate and civic-affairs users who currently check fragmented municipal websites manually or sit through hours of council video. The first paid value is searchable transcript moments, video timestamps, agenda/report evidence, keyword alerts, and cross-jurisdiction signals.
+
+## Product Standard
+
+Carried is the Canadian equivalent of Hamlet-level local government intelligence. The product is not an agenda scraper. It must provide:
+
+- Unlimited-style search across Canadian local government meetings.
+- Full transcript access for captured meetings.
+- Keyword, address, project, company, competitor, and policy alerts.
+- Video with timestamps for every useful transcript match.
+- Source-backed evidence from agendas, packets, staff reports, attachments, minutes, votes, and transcripts.
+- Professional content quality that a developer, planner, government-affairs team, journalist, advocate, or resident would pay for.
 
 ## Initial Personas
 
@@ -43,6 +54,7 @@ Start with Metro Vancouver real estate and civic-affairs users who currently che
 ## Jobs To Be Done
 
 - Find whether a topic, project, address, person, or company appeared in civic records.
+- Jump to the exact timestamp where a meeting video discusses the thing they searched.
 - Subscribe to a project/topic/address and get notified before or after relevant meetings.
 - Understand what changed in a meeting without watching hours of video.
 - Track a development or policy across multiple municipalities.
@@ -53,8 +65,8 @@ Start with Metro Vancouver real estate and civic-affairs users who currently che
 ### Search First
 
 1. User searches a topic like "Broadway Plan rezoning".
-2. Carried returns agenda/minute/transcript results grouped by municipality and date.
-3. User opens a result and sees source metadata, matching terms, and a short summary.
+2. Carried returns timestamped transcript moments plus agenda/minute/report evidence grouped by municipality and date.
+3. User opens a result and sees source metadata, matching terms, transcript quote, video timestamp, and a short summary.
 4. User saves the query as an alert.
 
 ### Alert First

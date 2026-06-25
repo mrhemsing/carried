@@ -13,6 +13,7 @@ import {
   fetchEscribeAgendaHtml,
   fetchEscribeCalendarMeetings,
   normalizeEscribeMeetings,
+  parseEscribeAgendaDocumentLinks,
   parseEscribeAgendaItems,
   type NormalizedMeeting,
 } from "@/ingest/escribe";
@@ -76,14 +77,36 @@ export async function persistEscribeMeetings(
       const agendaDocumentId = documentIds.get(meeting.agendaUrl);
 
       if (agendaHtml) {
-        const parsedItems = parseEscribeAgendaItems(agendaHtml);
+        const linkedDocuments = parseEscribeAgendaDocumentLinks(
+          tenant,
+          agendaHtml,
+        );
+
+        for (const document of linkedDocuments) {
+          const persistedDocument = await ensureDocument(
+            persistedMeeting.id,
+            document,
+          );
+
+          if (persistedDocument.inserted) {
+            result.documentsInserted += 1;
+          }
+
+          documentIds.set(document.sourceUrl, persistedDocument.id);
+        }
+
+        const parsedItems = parseEscribeAgendaItems(agendaHtml, tenant);
 
         for (const parsedItem of parsedItems) {
+          const primaryDocumentUrl =
+            parsedItem.documents.find((document) =>
+              documentIds.has(document.sourceUrl),
+            )?.sourceUrl ?? meeting.agendaUrl;
           const inserted = await ensureAgendaItem(
             persistedMeeting.id,
-            agendaDocumentId,
+            primaryDocumentUrl ? documentIds.get(primaryDocumentUrl) : agendaDocumentId,
             parsedItem,
-            meeting.agendaUrl,
+            primaryDocumentUrl ?? meeting.agendaUrl,
           );
 
           if (inserted) {
@@ -230,12 +253,20 @@ async function ensureAgendaItem(
   });
 
   if (existing) {
+    await db
+      .update(agendaItems)
+      .set({
+        documentId: documentId ?? null,
+        sourceUrl,
+        updatedAt: new Date(),
+      })
+      .where(eq(agendaItems.id, existing.id));
     return false;
   }
 
   await db.insert(agendaItems).values({
     meetingId,
-    documentId,
+    documentId: documentId ?? null,
     itemNumber: item.itemNumber,
     title: item.title,
     sourceUrl,
