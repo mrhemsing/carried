@@ -27,6 +27,13 @@ type PersistResult = {
   agendaItemsInserted: number;
 };
 
+const CODE_TO_KIND: Record<string, VancouverMeetingKind> = {
+  cfsc: "standing-committee",
+  phea: "public-hearing",
+  pspc: "standing-committee",
+  regu: "council",
+};
+
 export async function persistVancouverCouncilMeetings(options: {
   from?: Date;
   to?: Date;
@@ -272,21 +279,74 @@ function readKinds() {
   return value ? (value.split(",") as VancouverMeetingKind[]) : undefined;
 }
 
-async function main() {
+async function readFixtureMeetings() {
   const fixture = readArg("--fixture");
-  const meetings = fixture
-    ? [
-        parseVancouverCouncilMeeting(
-          await fs.readFile(path.resolve(process.cwd(), fixture), "utf8"),
-          readArg("--url") ?? "https://council.vancouver.ca/20260505/phea20260505ag.htm",
-          {
-            code: readArg("--code") ?? "phea",
-            date: new Date(readArg("--date") ?? "2026-05-05T12:00:00Z"),
-            kind: (readArg("--kind") as VancouverMeetingKind | undefined) ?? "public-hearing",
-          },
-        ),
-      ]
-    : undefined;
+  const fixtureDir = readArg("--fixture-dir");
+
+  if (fixture) {
+    return [await readFixtureMeeting(fixture)];
+  }
+
+  if (!fixtureDir) {
+    return undefined;
+  }
+
+  const directory = path.resolve(process.cwd(), fixtureDir);
+  const entries = await fs.readdir(directory, { withFileTypes: true });
+  const files = entries
+    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".html"))
+    .map((entry) => path.join(fixtureDir, entry.name))
+    .sort();
+  const meetings: VancouverCouncilMeeting[] = [];
+
+  for (const file of files) {
+    meetings.push(await readFixtureMeeting(file));
+  }
+
+  return meetings;
+}
+
+async function readFixtureMeeting(fixture: string) {
+  const inferred = inferFixtureCandidate(fixture);
+  return parseVancouverCouncilMeeting(
+    await fs.readFile(path.resolve(process.cwd(), fixture), "utf8"),
+    readArg("--url") ?? inferred.url,
+    {
+      code: readArg("--code") ?? inferred.code,
+      date: new Date(readArg("--date") ?? inferred.date),
+      kind: (readArg("--kind") as VancouverMeetingKind | undefined) ?? inferred.kind,
+    },
+  );
+}
+
+function inferFixtureCandidate(fixture: string) {
+  const name = path.basename(fixture);
+  const match = name.match(/^(\d{8})-([a-z]+)-ag\.html$/i);
+
+  if (!match) {
+    throw new Error(
+      `Cannot infer Vancouver fixture metadata from ${name}. Use YYYYMMDD-code-ag.html, for example 20260505-phea-ag.html.`,
+    );
+  }
+
+  const [, stamp, rawCode] = match;
+  const code = rawCode.toLowerCase();
+  const kind = CODE_TO_KIND[code];
+
+  if (!kind) {
+    throw new Error(`Unknown Vancouver meeting code in fixture filename: ${code}`);
+  }
+
+  return {
+    code,
+    date: `${stamp.slice(0, 4)}-${stamp.slice(4, 6)}-${stamp.slice(6, 8)}T12:00:00Z`,
+    kind,
+    url: `https://council.vancouver.ca/${stamp}/${code}${stamp}ag.htm`,
+  };
+}
+
+async function main() {
+  const meetings = await readFixtureMeetings();
   const result = await persistVancouverCouncilMeetings({
     from: readArg("--from") ? new Date(readArg("--from")!) : undefined,
     to: readArg("--to") ? new Date(readArg("--to")!) : undefined,
