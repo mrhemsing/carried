@@ -21,6 +21,7 @@
     "ingest:transcripts:openai": "tsx --tsconfig tsconfig.json src/ingest/openai-transcribe.ts",
     "ingest:transcripts:coverage": "tsx --tsconfig tsconfig.json src/ingest/transcript-coverage.ts",
     "ingest:vancouver:council": "tsx --tsconfig tsconfig.json src/ingest/vancouver-council-persist.ts",
+    "ingest:vancouver:normalize": "tsx --tsconfig tsconfig.json src/ingest/vancouver-manual-cache.ts",
     "ingest:vancouver:votes": "tsx --tsconfig tsconfig.json src/ingest/vancouver-open-data.ts --limit 25"
   },
   "dependencies": {
